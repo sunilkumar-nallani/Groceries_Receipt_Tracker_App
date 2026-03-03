@@ -1,0 +1,53 @@
+﻿
+> grocery-tracker@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+
+   Creating an optimized production build ...
+ Γ£ô (serwist) Bundling the service worker script with the URL '/sw.js' and the scope '/'...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+node.exe : 
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" "C:\
+Users\sunil\AppData\Roaming
+\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (:St  
+  ring) [], RemoteExcept   
+ ion
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+Failed to compile.
+
+./src/app/page.tsx
+22:15  Error: 
+'startOfCurrent' is 
+assigned a value but never 
+used.  @typescript-eslint/n
+o-unused-vars
+
+./src/hooks/use-toast.ts
+21:7  Error: 'actionTypes' 
+is assigned a value but 
+only used as a type.  @type
+script-eslint/no-unused-var
+s
+
+./src/lib/gemini.ts
+50:14  Error: 'error' is 
+defined but never used.  @t
+ypescript-eslint/no-unused-
+vars
+
+info  - Need to disable 
+some ESLint rules? Learn 
+more here: https://nextjs.o
+rg/docs/basic-features/esli
+nt#disabling-rules

@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    /* Pure white */
+    --foreground: 0 0% 24%;
+    /* #3c3c3c dark text */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 24%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 24%;
+    --primary: 94 98% 40%;
+    /* Duolingo Green #58CC02 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 24%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 199 89% 53%;
+    /* Duolingo Blue #1CB0F6 */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 354 84% 57%;
+    /* Duolingo Red #FF4B4B */
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    /* #e5e5e5 */
+    --input: 0 0% 90%;
+    --ring: 94 98% 40%;
+    --radius: 1rem;
+    --chart-1: 94 98% 40%;
+    --chart-2: 199 89% 53%;
+    --chart-3: 42 98% 50%;
+    /* Duolingo Yellow #FFC800 */
+    --chart-4: 282 44% 47%;
+    /* Purple #A560B8 */
+    --chart-5: 354 84% 57%;
+  }
+
+  .dark {
+    --background: 199 31% 11%;
+    /* Deep Navy #131F24 */
+    --foreground: 0 0% 100%;
+    --card: 199 26% 17%;
+    /* Card Dark `#202F36` */
+    --card-foreground: 0 0% 100%;
+    --popover: 199 26% 17%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 94 98% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 199 26% 22%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 199 26% 17%;
+    --muted-foreground: 199 15% 65%;
+    --accent: 199 89% 53%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 354 84% 57%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 199 26% 22%;
+    /* Dark borders `#202F36`+ */
+    --input: 199 26% 22%;
+    --ring: 94 98% 40%;
+    --chart-1: 94 98% 40%;
+    --chart-2: 199 89% 53%;
+    --chart-3: 42 98% 50%;
+    --chart-4: 282 44% 47%;
+    --chart-5: 354 84% 57%;
+  }
+}
+
+@layer utilities {
+  .btn-3d {
+    @apply border-b-4 active:border-b-0 active:translate-y-1 transition-all duration-150;
+  }
+}
