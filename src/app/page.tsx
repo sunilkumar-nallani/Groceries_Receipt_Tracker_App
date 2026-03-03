@@ -1,54 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Camera, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { db } from "@/lib/db";
-import { startOfMonth, subMonths, isSameMonth } from "date-fns";
+import { useLiveQuery } from "dexie-react-hooks";
+import { startOfMonth, subMonths, isSameMonth, parseISO } from "date-fns";
 
 export default function Dashboard() {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const [thisMonthTotal, setThisMonthTotal] = useState(0);
-  const [lastMonthTotal, setLastMonthTotal] = useState(0);
-  const [receiptCount, setReceiptCount] = useState(0);
 
-  useEffect(() => {
-    async function loadStats() {
-      try {
-        const now = new Date();
-        const startOfLast = startOfMonth(subMonths(now, 1));
+  const stats = useLiveQuery(async () => {
+    const now = new Date();
+    const startOfLast = startOfMonth(subMonths(now, 1));
+    const receipts = await db.receipts.toArray();
 
-        const receipts = await db.receipts.toArray();
+    let thisMonthTotal = 0;
+    let lastMonthTotal = 0;
+    let receiptCount = 0;
 
-        let currentTotal = 0;
-        let lastTotal = 0;
-        let currentCount = 0;
-
-        receipts.forEach((r) => {
-          const rDate = new Date(r.date);
-          if (isSameMonth(rDate, now)) {
-            currentTotal += r.total;
-            currentCount++;
-          } else if (isSameMonth(rDate, startOfLast)) {
-            lastTotal += r.total;
-          }
-        });
-
-        setThisMonthTotal(currentTotal);
-        setLastMonthTotal(lastTotal);
-        setReceiptCount(currentCount);
-      } catch (error) {
-        console.error("Failed to load dashboard stats", error);
-      } finally {
-        setLoading(false);
+    receipts.forEach((r) => {
+      // Ensure we parse the date string correctly to avoid timezone issues
+      const rDate = parseISO(r.date);
+      if (isSameMonth(rDate, now)) {
+        thisMonthTotal += r.total;
+        receiptCount++;
+      } else if (isSameMonth(rDate, startOfLast)) {
+        lastMonthTotal += r.total;
       }
-    }
+    });
 
-    loadStats();
+    return { thisMonthTotal, lastMonthTotal, receiptCount };
   }, []);
+
+  const loading = stats === undefined;
+  const { thisMonthTotal = 0, lastMonthTotal = 0, receiptCount = 0 } = stats || {};
 
   const diff = thisMonthTotal - lastMonthTotal;
   const percentChange = lastMonthTotal > 0 ? (diff / lastMonthTotal) * 100 : 0;

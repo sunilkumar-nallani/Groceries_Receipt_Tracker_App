@@ -12,13 +12,24 @@ export async function parseReceiptImage(base64Image: string, mimeType: string): 
     const prompt = `
 You are a grocery receipt parser. Analyze this receipt image and extract all data.
 Return ONLY a valid JSON object. No explanation, no markdown formatting like \`\`\`json, just raw JSON.
+
+STRICT DATE RULES:
+1. Look for the date in formats like DD.MM.YYYY, DD.MM.YY, or YYYY-MM-DD.
+2. If only 2 digits are provided for the year (e.g., 26), assume 2026.
+3. Today's date is ${new Date().toISOString().split('T')[0]}. If the receipt year seems to be in the past (like 2024) but the day/month match today, favor the current year unless clearly otherwise.
+4. If you see a date like "03.02.26" on a German receipt, it is likely March 2nd 2026 (DD.MM.YY).
+
+STRICT STORE RULES:
+1. Extract the commercial name of the store (e.g., "Rewe", "Aldi", "Lidl", "Edeka").
+2. Do not include branch numbers or street addresses in the storeName.
+
 Use this exact schema:
 {
-  "storeName": "string — store/supermarket name",
-  "date": "YYYY-MM-DD — date on the receipt",
+  "storeName": "string",
+  "date": "YYYY-MM-DD",
   "items": [
     {
-      "name": "string — product name",
+      "name": "string",
       "quantity": number,
       "unitPrice": number,
       "totalPrice": number

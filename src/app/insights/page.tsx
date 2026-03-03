@@ -44,9 +44,11 @@ export default function InsightsPage() {
     const topStore = pieData[0]?.name || "N/A";
 
     // Weekly Average (Total / weeks since first receipt)
-    const firstDate = Math.min(...receipts.map(r => new Date(r.date).getTime()));
+    const firstDate = Math.min(...receipts.map(r => parseISO(r.date).getTime()));
     const msElapsed = Date.now() - firstDate;
-    const weeksElapsed = Math.max(1, msElapsed / (1000 * 60 * 60 * 24 * 7));
+    const daysElapsed = Math.max(1, msElapsed / (1000 * 60 * 60 * 24));
+    // Calculate weeks by rounding up to include the current partial week
+    const weeksElapsed = Math.ceil(daysElapsed / 7);
     const weeklyAverage = totalSpentAllTime / weeksElapsed;
 
     return (
